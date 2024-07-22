@@ -9,6 +9,9 @@
  * 
  * Sample usage:
  * ```c
+// #define HT_IMPLEMENTATION
+// #include "ht.h"
+//
 // int main(void) {
 //     HashTable* ht = ht_create(10, free);
 //     if (ht == NULL) {
