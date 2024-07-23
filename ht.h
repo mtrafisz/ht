@@ -2,10 +2,13 @@
  *
  * This hash table implementation uses open addressing with linear probing and very simple expansion funciton
  * to handle collisions. It is intended to be used in small projects where a hash table is needed but the speed
- * and efficiency of the hash table is not a priority.
+ * and efficiency of the hash table is not a priority. Having string as key makes implementation simpler and
+ * useablility isn't affected very much - if your data-type can be converted to string, you can use it as key.
  * 
  * By default the hashing function used is fnv1a-1a, but it can be changed by defining a custom hashing function
- * compatible with the signature `uint64_t name(const char*)` and assigning it to hashFunc member of Your HashTable struct.
+ * compatible with the signature `uint64_t name(const char*)` and assigning it to hashFunc member of Your HashTable
+ * struct, or using one of other provided hashing functions:
+ *  - prhf - polynomial rolling hash function
  * 
  * Sample usage:
  * ```c
@@ -67,7 +70,7 @@ typedef void (*DestroyFunc)(void*);
 typedef uint64_t (*HashFunc)(const char*);
 
 typedef struct {
-    const char* key;
+    char* key;
     void* value;
 } HashTableEntry;
 
@@ -113,6 +116,20 @@ uint64_t fnv1a(const char* key) {
     }
 
     return hash;
+}
+
+uint64_t prhf(const char* key) {
+    const uint64_t p = 53, m = 1e9 + 9, n = strlen(key);
+
+    uint64_t hash_value = 0;
+    uint64_t p_pow = 1;
+
+    for (uint64_t i = 0; i < n; i++) {
+        hash_value = (hash_value + (key[i] - 'a' + 1) * p_pow) % m;
+        p_pow = (p_pow * p) % m;
+    }
+    
+    return hash_value;
 }
 
 HashTable* ht_create(uint64_t size, DestroyFunc destroyFunc) {
