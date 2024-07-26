@@ -46,6 +46,7 @@
 //     while (ht_next(it)) {
 //         printf("%s: %d\n", it->key, *((int*) it->value));
 //     }
+//     free(it);
 
 //     printf("Total words: %zu\n", ht_length(ht));
 
