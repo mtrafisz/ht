@@ -5,7 +5,7 @@
  * and efficiency of the hash table is not a priority. Having string as key makes implementation simpler and
  * useablility isn't affected very much - if your data-type can be converted to string, you can use it as key.
  * 
- * By default the hashing function used is fnv1a-1a, but it can be changed by defining a custom hashing function
+ * By default the hashing function used is fnv-1a, but it can be changed by defining a custom hashing function
  * compatible with the signature `uint64_t name(const char*)` and assigning it to hashFunc member of Your HashTable
  * struct, or using one of other provided hashing functions:
  *  - prhf - polynomial rolling hash function
