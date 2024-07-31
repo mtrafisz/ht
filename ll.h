@@ -1,5 +1,5 @@
-#ifndef _DLL_H
-#define _DLL_H
+#ifndef _LL_H
+#define _LL_H
 
 #include <stdlib.h>
 #include <string.h>
@@ -45,7 +45,7 @@ size_t ll_find(LinkedList* ll, void* value, CompareFunc compareFunc);
 void ll_sort(LinkedList* ll, CompareFunc compareFunc);
 void ll_reverse(LinkedList* ll);
 
-#ifdef DLL_IMPLEMENTATION
+#ifdef LL_IMPLEMENTATION
 
 LinkedList* ll_create(DestroyFunc destroyFunc) {
     LinkedList* ll = (LinkedList*) malloc (sizeof(LinkedList));
