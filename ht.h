@@ -78,7 +78,7 @@ typedef struct {
 typedef struct {
     HashTableEntry* entries;
     uint64_t capacity;
-    uint64_t lenght;
+    uint64_t length;
     DestroyFunc destroyFunc;
     HashFunc hashFunc;
 } HashTable;
@@ -146,7 +146,7 @@ HashTable* ht_create(uint64_t size, DestroyFunc destroyFunc) {
     }
 
     ht->capacity = size;
-    ht->lenght = 0;
+    ht->length = 0;
     ht->destroyFunc = destroyFunc;
     ht->hashFunc = fnv1a;
 
@@ -168,7 +168,7 @@ void ht_destroy(HashTable* ht) {
 }
 
 size_t ht_length(HashTable* ht) {
-    return ht->lenght;
+    return ht->length;
 }
 
 void* ht_get(HashTable* ht, const char* key) {
@@ -219,7 +219,7 @@ const char* ht_set(HashTable* ht, const char* key, void* value) {
         return NULL;
     }
 
-    if (ht->lenght >= ht->capacity) {
+    if (ht->length >= ht->capacity) {
         if (!ht_expand(ht)) {
             return NULL;
         }
@@ -244,7 +244,7 @@ const char* ht_set(HashTable* ht, const char* key, void* value) {
         ht->entries[index].key = strdup(key);
         if (ht->entries[index].key == NULL) return NULL;
         ht->entries[index].value = value;
-        ht->lenght++;
+        ht->length++;
     } else {
         return NULL;
     }
@@ -261,7 +261,7 @@ void* ht_remove(HashTable* ht, const char* key) {
             void* value = ht->entries[index].value;
             ht->entries[index].key = NULL;
             ht->entries[index].value = NULL;
-            ht->lenght--;
+            ht->length--;
             return value;
         }
 
